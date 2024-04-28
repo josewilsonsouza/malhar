@@ -36,8 +36,8 @@ class TimeStep:
         
         if self.number_sample == '3':
             
-            dfs_1 = [pd.read_csv(f'{dir}/amostra_1_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
-            dfs_2 = [pd.read_csv(f'{dir}/amostra_2_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
+            dfs_1 = [pd.read_csv(f'{self.dir}/amostra_1_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
+            dfs_2 = [pd.read_csv(f'{self.dir}/amostra_2_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
             dfs = dfs_1 + dfs_2
             
         else:
