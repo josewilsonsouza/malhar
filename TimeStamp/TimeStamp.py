@@ -33,7 +33,15 @@ class TimeStep:
 
         # Carregando os dados do sensor para cada corrida: com as duas mãos, mão direita, mão esquerda. Descartando as 200 primeiras e as
         # 200 ultimas linhas
-        dfs = [pd.read_csv(f'{self.dir}/amostra_{self.number_sample}_{label}/ACG.csv', sep = ';')[200:-200] for label in self.labels]
+        
+        if self.number_sample == '3':
+            
+            dfs_1 = [pd.read_csv(f'{dir}/amostra_1_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
+            dfs_2 = [pd.read_csv(f'{dir}/amostra_2_{label}/ACG.csv',sep=';')[200:-200] for label in self.labels]
+            dfs = dfs_1 + dfs_2
+            
+        else:
+            dfs = [pd.read_csv(f'{self.dir}/amostra_{self.number_sample}_{label}/ACG.csv', sep = ';')[200:-200] for label in self.labels]
             
         return dfs
     
@@ -53,18 +61,37 @@ class TimeStep:
         '''
         
         files_extra = []  # Lista para armazenar os arquivos extra.json de cada df
-    
-        for label in self.labels:
-            url = f'{self.dir}/amostra_{self.number_sample}_{label}/extra.json'
-            response = rq.get(url)
-        
-            # Verificar se a solicitação foi bem-sucedida (código de status 200)
-            if response.status_code == 200:
-                data = response.json()
-                files_extra.append(data)
+
+        if self.number_sample == '3':
+            
+            for label in self.labels:
+                url1 = f'{self.dir}/amostra_1_{label}/extra.json'
+                response_1 = rq.get(url1)
+
+                if response_1.status_code == 200:
+                    data_1 = response_1.json()
+                    files_extra.append(data_1)
+
+                url2 = f'{self.dir}/amostra_2_{label}/extra.json'
+                response_2 = rq.get(url2)
+
+                if response_2.status_code == 200:
+                    data_2 = response_2.json()
+                    files_extra.append(data_2)
                 
-            else:
-                print(f"Falha ao carregar o arquivo JSON para o rótulo '{label}'. Código de status: {response.status_code}")
+        else:
+            
+            for label in self.labels:
+                url = f'{self.dir}/amostra_{self.number_sample}_{label}/extra.json'
+                response = rq.get(url)
+            
+                # Verificar se a solicitação foi bem-sucedida (código de status 200)
+                if response.status_code == 200:
+                    data = response.json()
+                    files_extra.append(data)
+                    
+                else:
+                    print(f"Falha ao carregar o arquivo JSON para o rótulo '{label}'. Código de status: {response.status_code}")
         
         return files_extra
                 
