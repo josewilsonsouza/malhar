@@ -30,8 +30,10 @@ class TimeStep:
             Df
         -------
         '''
-        
-        dfs = [pd.read_csv(f'{self.dir}/amostra_{self.number_sample}_{label}/ACG.csv', sep = ';') for label in self.labels]
+
+        # Carregando os dados do sensor para cada corrida: com as duas mãos, mão direita, mão esquerda. Descartando as 200 primeiras e as
+        # 200 ultimas linhas
+        dfs = [pd.read_csv(f'{self.dir}/amostra_{self.number_sample}_{label}/ACG.csv', sep = ';')[200:-200] for label in self.labels]
             
         return dfs
     
