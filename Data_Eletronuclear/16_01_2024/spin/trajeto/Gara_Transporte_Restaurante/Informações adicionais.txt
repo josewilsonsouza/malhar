@@ -1,0 +1,10 @@
+Horário da coleta inicial do OBDLink: 12:00:24 pm
+
+Observações:
+
+ - Coleta de dados do Datalog iniciou-se aproximadamente dois minutos após a saída.
+
+Início - 12h
+Fim - 12h22
+Duração - 0h22
+Turno - Manhã
