@@ -107,8 +107,13 @@ class TimeStep:
         '''
         
         dfs = []
+
+        if self.number_sample == '3':
+            n = 2
+        else:
+            n=1
         
-        for df, dados, label in zip(self.load_data(), self.load_files_extra(), self.labels):
+        for df, dados, label in zip(self.load_data(), self.load_files_extra(), n*self.labels):
 
             df["t"] = (((dados["nanos"] - df.t) // 1000000) + dados["millis"]) #aplica correcoes de metadados
             df["t"] = df.t - df.t.min() #puxa tempo inicial para zero, subtraindo valor minimo como offset
